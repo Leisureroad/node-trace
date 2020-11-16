@@ -1,0 +1,10 @@
+
+docker build -t gcr.io/flius-project/node-no-custom-span .
+
+kubectl create deployment node-trace --image=gcr.io/flius-project/node-no-custom-span:12-alpine --dry-run -oyaml > deployment.yaml
+
+kubectl get pod
+
+kubectl port-forward node-trace-5dfd6c6d67-k6mrh 8080:8080
+
+kubectl expose deployment node-trace --port=8080 --target-port=8080 --name=node-trace-svc --type=LoadBalancer
