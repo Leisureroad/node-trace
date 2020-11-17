@@ -49,6 +49,13 @@ async function setupRoutes() {
 
     return res.status(201).send(createdCat.data);
   });
+
+  app.get('/go-b', async (req, res) => {
+    const createdCat = await axios.get(`http://node-trace-svc-b.default.svc.cluster.local:8080/svc-b`);
+
+    return res.status(201).send(createdCat.data);
+  });
+
   app.use('/cats', authMiddleware, getCrudController());
 }
 
